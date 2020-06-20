@@ -1,11 +1,11 @@
-resource "kubernetes_service" "events-internal-service" {
+resource "kubernetes_service" "avenger-backend-service" {
   metadata {
-    name      = "events-internal-service"
+    name      = "avenger-backend-service"
     namespace = kubernetes_namespace.events_ns.metadata[0].name
   }
   spec {
     selector = {
-      App = kubernetes_deployment.events-internal-deployment.spec.0.template.0.metadata[0].labels.App
+      App = kubernetes_deployment.avenger-backend-service.spec.0.template.0.metadata[0].labels.App
     }
     port {
       port        = 8082

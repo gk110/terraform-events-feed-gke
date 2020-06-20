@@ -1,8 +1,8 @@
-resource "kubernetes_deployment" "events-external-deployment" {
+resource "kubernetes_deployment"  "avenger-frontend-services" {
   metadata {
-    name = "events-external-deployment"
+    name = "avenger-frontend-services"
     labels = {
-      App = "events-external"
+      App = "avenger-frontend-service"
     }
     namespace = kubernetes_namespace.events_ns.metadata[0].name
   }
@@ -12,23 +12,23 @@ resource "kubernetes_deployment" "events-external-deployment" {
     progress_deadline_seconds = 90
     selector {
       match_labels = {
-        App = "events-external"
+        App = "avenger-frontend-service"
       }
     }
     template {
       metadata {
         labels = {
-          App = "events-external"
+          App =  "avenger-frontend-service"
         }
       }
       spec {
         container {
           image = "${var.container_registry}/${var.project_id}/${var.external_image_name}"
-          name  = "events-external"
+          name  = "avenger-frontend-service"
 
           env {
             name  = "SERVER"
-            value = "http://events-internal-service:8082"
+            value = "http://avenger-backend-service:8082"
           }
           port {
             container_port = 8080

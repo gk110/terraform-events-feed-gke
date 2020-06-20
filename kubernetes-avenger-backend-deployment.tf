@@ -1,8 +1,8 @@
-resource "kubernetes_deployment" "events-internal-deployment" {
+resource "kubernetes_deployment" "avenger-backend-service" {
   metadata {
-    name = "events-internal-deployment"
+    name = "avenger-backend-service"
     labels = {
-      App = "events-internal"
+      App = "avenger-backend"
     }
     namespace = kubernetes_namespace.events_ns.metadata[0].name
   }
@@ -12,19 +12,19 @@ resource "kubernetes_deployment" "events-internal-deployment" {
     progress_deadline_seconds = 60
     selector {
       match_labels = {
-        App = "events-internal"
+        App = "avenger-backend"
       }
     }
     template {
       metadata {
         labels = {
-          App = "events-internal"
+          App = "avenger-backend"
         }
       }
       spec {
         container {
           image = "${var.container_registry}/${var.project_id}/${var.internal_image_name}"
-          name  = "events-internal"
+          name  = "avenger-backend"
 
           env {
             name  = "GOOGLE_CLOUD_PROJECT"
